@@ -1,0 +1,26 @@
+<div class="contenedor-header">
+    <div class="contendor-header__link">
+        <div class="logo">
+            <img src="../../../../assets/undraw_Hamburger_8ge6.svg" alt="" srcset="" class="imagen-logo">
+        </div>
+        <div class="seccion">
+            <input class="input-search" nz-input placeholder="Search !" />
+        </div>
+        <div class="seccion">
+            <span>ENTREGA EN</span>
+            <div class="item">
+                <i class="fas fa-home"></i>
+            </div>
+        </div>
+        <div class="seccion botones">
+            <nz-badge [nzCount]="5">
+                <button class="carrito-button">
+                    <i class="fas fa-shopping-cart"></i>
+                </button>
+            </nz-badge>
+            <button class="carrito-button"><i class="far fa-user"></i></button>
+            <button nz-button nzType="dashed" *ngIf="(auth.isAuthenticated$ | async )" (click)="logout()">Logout</button>
+        </div>
+
+    </div>
+</div>

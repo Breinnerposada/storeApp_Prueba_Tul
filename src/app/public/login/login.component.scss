@@ -1,24 +1,11 @@
+.contenedor {
+    height: 100%;
+    display: grid;
+    gap: 40px;
+    grid-template-rows: 50% 50%;
+}
 
-      .login-form {
-        max-width: 300px;
-      }
-
-      .login-form-margin {
-        margin-bottom: 16px;
-      }
-
-      .login-form-forgot {
-        float: right;
-      }
-
-      .login-form-button {
-        width: 100%;
-      }
-    
-
-      .contenedor{
-        height: 100%;
-        display: grid;
-        gap: 40px;
-        grid-template-rows: 50% 50%;
-      }
+.contenedor-home {
+    height: 100%;
+    width: 100%;
+}

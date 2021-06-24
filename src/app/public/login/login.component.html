@@ -1,11 +1,16 @@
-
+<div *ngIf="(auth.isAuthenticated$ | async) === false">
     <div class="contenedor">
         <div class="contenedor-header">
             <app-header></app-header>
         </div>
         <div class="contenedor-body">
-        <div class="destacados">
-            <app-card-destacados></app-card-destacados>
-        </div>
+            <div class="destacados">
+                <app-card-destacados></app-card-destacados>
+            </div>
         </div>
     </div>
+</div>
+
+<div *ngIf="(auth.isAuthenticated$ | async) !== false" class="contenedor-home">
+    <app-home></app-home>
+</div>

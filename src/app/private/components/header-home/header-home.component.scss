@@ -1,0 +1,56 @@
+.contendor-header__link {
+    width: 100%;
+    gap: 2%;
+    height: 100%;
+    padding: 10px 0px;
+    display: grid;
+    grid-template-columns: 20% 40% 14% 20%;
+}
+
+.imagen-logo {
+    height: 150px;
+    width: 100%;
+}
+
+.tipo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagen-tipo {
+    height: 90px;
+    width: 100%;
+}
+
+.seccion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.carrito-button {
+    border: none;
+    background-color: #ffffff;
+}
+
+.botones {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.item {
+    margin: 10px;
+}
+
+i {
+    color: #6C63FF;
+    font-size: 17px;
+}
+
+button:hover {
+    color: #ffffff;
+    font-size: 15px;
+    cursor: pointer;
+}

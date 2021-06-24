@@ -13,11 +13,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { AuthModule } from '@auth0/auth0-angular';
-
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
 import { LoginModule } from './public/login/login.module';
 import { Page404Component } from './public/page404/page404.component';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { SharedModuleModule } from './shared/shared-module/shared-module.module';
 
 
 
@@ -29,6 +29,7 @@ registerLocaleData(es);
     Page404Component,
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebase),
     ReactiveFormsModule,
     AuthModule.forRoot({
       domain: 'dev-425e31fr.us.auth0.com',
@@ -36,11 +37,10 @@ registerLocaleData(es);
       cacheLocation: 'localstorage',
       useRefreshTokens: true
     }),
-    NzFormModule,
-    NzInputModule,
     CommonModule,
     HttpClientModule,
     BrowserModule,
+    SharedModuleModule,
     BrowserAnimationsModule,
     LoginModule,
     AppRoutingModule,

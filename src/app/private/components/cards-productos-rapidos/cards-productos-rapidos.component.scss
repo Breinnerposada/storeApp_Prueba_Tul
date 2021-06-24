@@ -1,0 +1,15 @@
+.contenedor {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+}
+
+.card {
+    height: 450px;
+    width: 320px;
+}
+
+.img-card {
+    height: 250px;
+    width: 100%;
+}

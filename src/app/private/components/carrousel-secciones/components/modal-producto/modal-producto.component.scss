@@ -1,0 +1,29 @@
+.contenedor {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    height: 100%;
+    width: 100%;
+}
+
+.contenedor-imagen {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50px;
+}
+
+.login-form {
+    max-width: 300px;
+}
+
+.login-form-margin {
+    margin-bottom: 16px;
+}
+
+.login-form-forgot {
+    float: right;
+}
+
+.login-form-button {
+    width: 100%;
+}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
+import { LoginService } from '../../../../services/public/login.service';
 
 @Component({
   selector: 'app-header',
@@ -7,11 +8,13 @@ import { AuthService } from '@auth0/auth0-angular';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
-  constructor(public auth: AuthService) { }
+  login: boolean = false;
+  constructor(public auth: AuthService, private loginService: LoginService) { }
 
   ngOnInit(): void {
-    console.log(this.auth.isAuthenticated$);
+  }
+
+  ngOnChanges(): void {
   }
 
   loginWithRedirect(){
