@@ -1,0 +1,28 @@
+
+<div class="contenedor-header">
+  <div class="contenedor-header__links">
+    <div class="header-link__label">
+      <div class="restaurantes"><span>Restaurante</span></div>
+      <div class="logo"><span>logo</span></div>
+      <button nz-button nzType="dashed" *ngIf="!(auth.isAuthenticated$ | async)"(click)="loginWithRedirect()">Login</button>
+      <button nz-button nzType="dashed" *ngIf="(auth.isAuthenticated$ | async )" (click)="logout()">Logout</button>
+    </div>
+  </div>
+  <div class="contenedor-header__imagen">
+    <div class="header-imagen__img">
+      <img src="../../../../../assets/undraw_Hamburger_8ge6.svg" alt="imagen">
+    </div>
+    <div class="header-imagen__label">
+      <h1>Delive App</h1>
+      <button class="input-search">
+        <canvas>
+        </canvas>
+        <div class="texto-canvas">
+          <i class="fas fa-search" slot="end"></i>
+          <span>Search!!!</span>
+        </div>
+      </button>
+
+    </div>
+  </div>
+</div>

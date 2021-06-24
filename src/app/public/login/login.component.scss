@@ -15,3 +15,10 @@
         width: 100%;
       }
     
+
+      .contenedor{
+        height: 100%;
+        display: grid;
+        gap: 40px;
+        grid-template-rows: 50% 50%;
+      }

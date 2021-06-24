@@ -1,0 +1,31 @@
+.card-carrousel{
+    text-align: center;
+    width: 33.3% !important;
+    border-radius: 19px;
+    background: #364d79;
+    height: 244px !important;
+    margin: 0px 10px;
+    color: #fff;
+    overflow: hidden;
+
+    img{
+        height: 100%;
+        width: 100%;
+    }
+    img:hover{
+        transform: scale(1.06);
+    }
+  }
+
+  h3 {
+    color: #fff;
+    margin-bottom: 0;
+  }
+
+
+  .contenedor-card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
