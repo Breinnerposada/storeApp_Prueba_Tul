@@ -9,13 +9,15 @@ import { FirestoreService } from '../../services/firestore/firestore.service';
 })
 export class HomeComponent implements OnInit {
   productos: any = [];
+  carritoProducto: any = []
    elementActive = false;
 
   constructor(public auth: AuthService, private fireDataBase: FirestoreService) { }
 
   ngOnInit(): void {
     this.getProducts();
-    console.log(this.productos);
+    this.listarCarritoProducto()
+    console.log(this.carritoProducto);
   }
 
     
@@ -28,4 +30,14 @@ export class HomeComponent implements OnInit {
       })
     })
   }
+
+  
+async listarCarritoProducto(){
+  await this.fireDataBase.getCarritoProducto().subscribe((resp) => {
+    resp.forEach((carritoProducto) => {
+      this.carritoProducto.push(...[carritoProducto]);
+      console.log(this.carritoProducto);
+    })
+  })
+}
 }

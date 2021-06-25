@@ -11,12 +11,19 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 })
 export class CarritoCompraComponent implements OnInit {
   @Input() visible:any;
-  @Input() productos :any;
-  
+  @Input() carritoProducto :any;
+  productoCarrito:any = []
+  update: boolean = false
   constructor(private firestoreService: FirestoreService,private modalNgz: NzModalService) { }
 
   ngOnInit(): void {
-    console.log(this.productos);
+    this.carritoProducto.forEach((resp) => {
+      console.log(resp);
+      this.productoCarrito.push(...resp.productos)
+      console.log(this.productoCarrito);
+    });
+
+    console.log(this.carritoProducto);
   }
 
   close(): void {
@@ -30,7 +37,8 @@ export class CarritoCompraComponent implements OnInit {
       nzTitle: item.nombre,
       nzContent: ModalProductoComponent,
       nzComponentParams: {
-        producto:  item
+        producto:  item,
+        update: this.update = true
       },
       nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000)),
     });
@@ -38,10 +46,10 @@ export class CarritoCompraComponent implements OnInit {
     modal.afterOpen.subscribe(() => console.log('[afterOpen] emitted!'));
   }
 
-  eliminarProducto(item:IProducto){
-    this.firestoreService.deleteCarrito(item)
-    .then((resp) => console.log(resp))
-    .catch((err) => console.log(err))
+  eliminarProducto(id){
+    this.firestoreService.deleteCarritoProducto(id)
+    .then(()=> console.log(this.carritoProducto))
+    .catch((err)=> console.log(err))
   }
 
 

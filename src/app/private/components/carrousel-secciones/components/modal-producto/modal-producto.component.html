@@ -1,17 +1,18 @@
 <div class="contenedor" *ngIf="producto">
     <div class="contenedor-imagen" [style]="producto.url_image | domSanatizer"></div>
     <div class="contenedor-informacion">
-            <div class="informacion-titulo">{{producto.nombre}}</div>
-            <div class="informacion-detalada">
+        <div class="informacion-titulo">{{producto.nombre}}</div>
+        <div class="informacion-detalada">
             <div class="informacion__descripcion">{{producto.descripcion}}</div>
             <div class="informacion__sku"> sku: {{producto.sku}}</div>
             <div class="informacion__descripcion"> <i class="fas fa-dollar-sign"></i> Precio: {{producto.precio}}</div>
             <div class="informacion__precio"> <i class="fas fa-dollar-sign"></i> Total: {{producto.precio * cantidad | number}} COP</div>
-            </div>
+        </div>
 
-            <div class="button-agregar">
-                <nz-input-number [(ngModel)]="cantidad" [nzMin]="1" [nzMax]="50" [nzStep]="1" class="btn" ></nz-input-number>
-                <button nz-button nzType="primary" (click)="crearCarritoProducto()">Agregar</button>
-            </div>
+        <div class="button-agregar">
+            <nz-input-number [(ngModel)]="cantidad" [nzMin]="1" [nzMax]="50" [nzStep]="1" class="btn" (click)="calcularCantidad()"></nz-input-number>
+            <button nz-button nzType="primary" (click)="crearProductoCarrito()" *ngIf="!update">Agregar</button>
+            <button nz-button nzType="primary" (click)="editarProductoCarrito()" *ngIf="update">Editar</button>
         </div>
     </div>
+</div>

@@ -9,14 +9,12 @@ import { FirestoreService } from '../../../services/firestore/firestore.service'
 })
 export class HeaderHomeComponent implements OnInit {
   visible = false;
-  contador = 0;
   contenidoCarrito :any;
   @Input() productos:any;
+  @Input() carritoProducto:any;
   constructor(public auth: AuthService, private firestoreService: FirestoreService) { }
 
   ngOnInit(): void {
-  console.log(this.productos);
-  console.log(this.contador);
   }
 
   logout(){

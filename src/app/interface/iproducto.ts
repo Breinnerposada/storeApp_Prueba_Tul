@@ -1,6 +1,6 @@
 export interface IProducto {
-descripcion: string,
 id: number,
+descripcion: string,
 nombre: string,
 precio: number,
 seccion_Producto: number,
