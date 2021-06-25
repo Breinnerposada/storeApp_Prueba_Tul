@@ -9,6 +9,8 @@ import { CarrouselSeccionesComponent } from '../components/carrousel-secciones/c
 import { CardsProductosRapidosComponent } from '../components/cards-productos-rapidos/cards-productos-rapidos.component';
 import { ModalProductoComponent } from '../components/carrousel-secciones/components/modal-producto/modal-producto.component';
 import { DomSanatizerPipe } from 'src/app/pipes/dom-sanatizer.pipe';
+import { FormsModule } from '@angular/forms';
+import { CarritoCompraComponent } from 'src/app/private/components/header-home/components/carrito-compra/carrito-compra.component';
 
 
 @NgModule({
@@ -18,13 +20,15 @@ import { DomSanatizerPipe } from 'src/app/pipes/dom-sanatizer.pipe';
     CarrouselSeccionesComponent,
     CardsProductosRapidosComponent,
     ModalProductoComponent,
+    CarritoCompraComponent,
     DomSanatizerPipe
   ],
   imports: [
     CommonModule,
+    FormsModule,
     HomeRoutingModule,
     SharedModuleModule,
   ],
-  exports: [HeaderHomeComponent,HomeComponent,CarrouselSeccionesComponent,CardsProductosRapidosComponent,ModalProductoComponent]
+  exports: [HeaderHomeComponent,HomeComponent,CarrouselSeccionesComponent,CardsProductosRapidosComponent,ModalProductoComponent,CarritoCompraComponent]
 })
 export class HomeModule { }

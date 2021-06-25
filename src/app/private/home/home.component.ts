@@ -9,6 +9,7 @@ import { FirestoreService } from '../../services/firestore/firestore.service';
 })
 export class HomeComponent implements OnInit {
   productos: any = [];
+   elementActive = false;
 
   constructor(public auth: AuthService, private fireDataBase: FirestoreService) { }
 
@@ -21,7 +22,9 @@ export class HomeComponent implements OnInit {
   async getProducts(){
     await this.fireDataBase.getProducts().subscribe((resp) => {
       resp.forEach((prod: any) => {
-       this.productos.push(...[prod])
+        setTimeout(()=> {
+          this.productos.push(...[prod])
+        },1500)
       })
     })
   }

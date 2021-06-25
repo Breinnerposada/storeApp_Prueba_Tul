@@ -13,8 +13,8 @@
             </div>
         </div>
         <div class="seccion botones">
-            <nz-badge [nzCount]="5">
-                <button class="carrito-button">
+            <nz-badge [nzCount]="productos.length">
+                <button class="carrito-button" (click)="open()">
                     <i class="fas fa-shopping-cart"></i>
                 </button>
             </nz-badge>
@@ -22,5 +22,8 @@
             <button nz-button nzType="dashed" *ngIf="(auth.isAuthenticated$ | async )" (click)="logout()">Logout</button>
         </div>
 
+    </div>
+    <div class="contenedor" *ngIf="visible">
+        <app-carrito-compra [visible]="visible" [productos]="productos"></app-carrito-compra>
     </div>
 </div>

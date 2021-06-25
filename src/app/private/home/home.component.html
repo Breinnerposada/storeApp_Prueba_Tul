@@ -1,14 +1,26 @@
 <div class="contenedor">
     <div class="contenedor-header">
-        <app-header-home></app-header-home>
+        <app-header-home *ngIf="productos" [productos]="productos"></app-header-home>
     </div>
     <div class="contenedor-body">
         <div class="secciones">
             <app-carrousel-secciones></app-carrousel-secciones>
         </div>
-        <div class="productos-rapidos">
+        <div class="productos-rapidos" *ngIf="productos">
             <strong>Comidas Rápidas</strong>
             <app-cards-productos-rapidos [productos]="productos"></app-cards-productos-rapidos>
+        </div>
+        <div class="productos-rapidos" *ngIf="productos.length === 0">
+            <div class="contenedor-card">
+                <div class="card-container" *ngFor="let item of [1,1,1,1,1]">
+                    <nz-card nzHoverable class="card" [nzCover]="coverTemplate">
+                        <nz-skeleton [nzActive]="true" style="width: 100%;"></nz-skeleton>
+                    </nz-card>
+                    <ng-template #coverTemplate>
+                        <nz-skeleton-element nzType="image" [nzActive]="elementActive" style="height: 100%; width: 100%;"></nz-skeleton-element>
+                    </ng-template>
+                </div>
+            </div>
         </div>
 
     </div>

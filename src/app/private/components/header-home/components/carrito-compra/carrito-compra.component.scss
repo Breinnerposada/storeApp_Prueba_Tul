@@ -1,0 +1,41 @@
+.contenedor-card{
+    height: 15%;
+    margin: 18px 0px;
+    box-shadow: 0px 4px 16px rgb(0 0 0 / 8%);
+    display: grid;
+    grid-template-columns: 30% 65%;
+    border-radius: 10px;
+    gap: 2%;
+}
+.contenedor{
+    height: 100%;
+    width: 100%;
+    padding: 5%;
+}
+
+.contenedor-imagen {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+}
+
+.text-aling{
+    text-align: end;
+}
+
+button{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background: #ffffff;
+    border: none;
+    white-space: initial;
+}
+
+button:hover{
+    color: black;
+    box-shadow: 0px 4px 16px rgb(0 0 0 / 10%);
+
+}

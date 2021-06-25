@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IProducto } from 'src/app/interface/iproducto';
+import { FirestoreService } from '../../../../../services/firestore/firestore.service';
 
 @Component({
   selector: 'app-modal-producto',
@@ -11,10 +13,16 @@ export class ModalProductoComponent implements OnInit {
   validateForm!: FormGroup;
   isVisible = false;
   isConfirmLoading = false;
-  constructor(private fb: FormBuilder) { }
+  cantidad = 1;
+  precioTotal = 0;
+  constructor(private fb: FormBuilder, private firestoreService: FirestoreService) { }
 
   ngOnInit(): void {
-    console.log(this.producto);
+    this.agregarProducto();
+    this.firestoreService.carritoActualizado.emit(this.producto);
+  }
+  ngOnChanges(): void {
+    this.calcularPrecio()
   }
 
   handleOk(): void {
@@ -35,12 +43,33 @@ export class ModalProductoComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();} 
  }
 
- buildForm(){
-  this.validateForm = this.fb.group({
-    userName: [null, [Validators.required]],
-    password: [null, [Validators.required]],
-    remember: [true]
-  });
+ buildFormulario(){
+
  }
+
+
+calcularPrecio(){
+  if (this.producto){
+    console.log('cambio');
+     return this.precioTotal = this.cantidad * this.producto.precio;
+  }
+  return;
+}
+
+async agregarProducto(){
+ await this.firestoreService.getCarritoProducto().subscribe((resp:any) => {
+ });
+}
+async crearCarritoProducto(){
+ await this.firestoreService.crearCarritoProducto(this.producto)
+  .then((resp)=> console.log(resp))
+ .catch((err) => console.log(err))
+}
+
+async borrarCarrito(){
+  await this.firestoreService.deleteCarrito(this.producto)
+  .then((resp)=> console.log(resp))
+  .catch((err) => console.log(err))
+}
 
 }

@@ -1,14 +1,17 @@
 <div class="contenedor" *ngIf="producto">
     <div class="contenedor-imagen" [style]="producto.url_image | domSanatizer"></div>
     <div class="contenedor-informacion">
-        <nz-descriptions nzTitle="User Info">
-            <nz-descriptions-item nzTitle="UserName">Zhou Maomao</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Telephone">18100000000</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Live">Hangzhou, Zhejiang</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Remark">Empty</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Address">
-                No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
-            </nz-descriptions-item>
-        </nz-descriptions>
+            <div class="informacion-titulo">{{producto.nombre}}</div>
+            <div class="informacion-detalada">
+            <div class="informacion__descripcion">{{producto.descripcion}}</div>
+            <div class="informacion__sku"> sku: {{producto.sku}}</div>
+            <div class="informacion__descripcion"> <i class="fas fa-dollar-sign"></i> Precio: {{producto.precio}}</div>
+            <div class="informacion__precio"> <i class="fas fa-dollar-sign"></i> Total: {{producto.precio * cantidad | number}} COP</div>
+            </div>
+
+            <div class="button-agregar">
+                <nz-input-number [(ngModel)]="cantidad" [nzMin]="1" [nzMax]="50" [nzStep]="1" class="btn" ></nz-input-number>
+                <button nz-button nzType="primary" (click)="crearCarritoProducto()">Agregar</button>
+            </div>
+        </div>
     </div>
-</div>

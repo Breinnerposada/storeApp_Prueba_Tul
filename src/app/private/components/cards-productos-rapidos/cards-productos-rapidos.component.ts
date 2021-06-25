@@ -10,11 +10,10 @@ import { ModalProductoComponent } from '../carrousel-secciones/components/modal-
 export class CardsProductosRapidosComponent implements OnInit {
   @Input() productos:any;
   isVisible :boolean = false;
+  elementActive = false;
   constructor(private modalNgz: NzModalService) { }
 
   ngOnInit(): void {
-
-    console.log(this.productos);
   }
 
   showModal(item:any): void {
@@ -23,8 +22,8 @@ export class CardsProductosRapidosComponent implements OnInit {
 
   createComponentModal(item:any): void {
     const modal = this.modalNgz.create({
-      nzBodyStyle: {height: '500px', width: '1200px'},
-      nzStyle: {height: '500px', width: '1200px'},
+      nzBodyStyle: {height: '500px', width: '1100px'},
+      nzStyle: {height: '500px', width: '1100px'},
       nzTitle: item.nombre,
       nzContent: ModalProductoComponent,
       nzComponentParams: {

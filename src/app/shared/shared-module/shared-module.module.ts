@@ -10,6 +10,10 @@ import { NzRateModule } from 'ng-zorro-antd/rate';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 
 
@@ -26,7 +30,11 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
     NzCardModule,
     NzRateModule,
     NzModalModule,
-    NzDescriptionsModule
+    NzDescriptionsModule,
+    NzInputNumberModule,
+    NzDrawerModule,
+    NzPopoverModule,
+    NzSkeletonModule
   ],
   exports: [
     CommonModule,
@@ -39,7 +47,11 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
     NzCardModule,
     NzRateModule,
     NzModalModule,
-    NzDescriptionsModule
+    NzDescriptionsModule,
+    NzInputNumberModule,
+    NzDrawerModule,
+    NzPopoverModule,
+    NzSkeletonModule
   ]
 })
 export class SharedModuleModule { }
