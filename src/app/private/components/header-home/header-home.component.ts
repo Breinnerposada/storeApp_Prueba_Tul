@@ -9,15 +9,32 @@ import { FirestoreService } from '../../../services/firestore/firestore.service'
 })
 export class HeaderHomeComponent implements OnInit {
   visible = false;
+  estado;
   contenidoCarrito :any;
   @Input() productos:any;
-  @Input() carritoProducto:any;
+  @Input() carritoProducto:any[] = [];
+  currentCarritoProducto:any[] = []
   constructor(public auth: AuthService, private firestoreService: FirestoreService) { }
 
   ngOnInit(): void {
     this.firestoreService.solovista.subscribe((resp) => {
       this.visible = resp;
     })
+
+    this.firestoreService.getCarrito().subscribe((res:any[]) => {
+      res.forEach(r => {
+        if(r.estado === false){
+          this.estado = r
+          this.carritoProducto.forEach((resp) => {
+          if (this.estado.id === resp.carritoId){
+            console.log(resp);
+            this.currentCarritoProducto.push(...[resp])
+          }
+          })
+        }
+      })
+  })
+
   }
 
   logout(){

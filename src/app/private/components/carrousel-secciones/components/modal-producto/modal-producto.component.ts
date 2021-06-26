@@ -5,6 +5,7 @@ import { CarritoProducto } from 'src/app/models/carrito-producto/carrito-product
 import { FirestoreService } from '../../../../../services/firestore/firestore.service';
 import {map} from 'rxjs/operators'
 import { ICarrito } from 'src/app/interface/carrito-interface';
+import { Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-modal-producto',
@@ -18,27 +19,45 @@ export class ModalProductoComponent implements OnInit {
   validateForm:FormGroup;
   isVisible = false;
   isConfirmLoading = false;
+  filtrado:any[] = [];
   cantidad:number = 0;
   curretCarrito:any[] = [];
   productosFormulario:any = [];
   carritoPendiente:any[] = [];
+  currentCarritoPendiente :any = [];
+  suscribe: Subscriber<any>
   carrito :any = [];
   precioTotal = 0;
   constructor(private fb: FormBuilder, private firestoreService: FirestoreService) {
    }
 
   ngOnInit(): void {
-    console.log(this.productoEditar);
     this.buildFormulario();
     this.firestoreService.getCarrito().subscribe((res) => {
-      this.carritoPendiente.push(...res)
+      this.filtrado = res.filter((r) => r.estado === false)
+      if (this.filtrado.length === 0){
+        console.log('Carrito a crear');
+        this.firestoreService.createCarrito(null)
+        .then(r => {
+          console.log(r);
+        })
+        .catch((err) => console.log(err))
+      }else if (this.filtrado.length > 0){
+        console.log(this.filtrado);
+        this.carritoPendiente.push(...this.filtrado)
+      }
     })
 
-    console.log(this.carritoPendiente);
+
+
   }
 
   ngOnChanges(): void {
     this.buildFormulario();
+    this.firestoreService.getCarrito().subscribe((res) => {
+      const filtrado = res.filter((r) => r.estado === false)
+      this.carritoPendiente.push(...[filtrado])
+    })
   }
 
   
@@ -66,44 +85,33 @@ export class ModalProductoComponent implements OnInit {
   }
 
   async crearProductoCarrito(){
-      if ((this.carritoPendiente.length === 0)){
-            await  this.firestoreService.crearCarrito(null,this.productosFormulario)
-            .then((resp) => {
-              this.carritoPendiente = resp[0].id;
-            })
-            .catch((err) => console.log(err))
+    console.log(this.filtrado);
+    this.filtrado.forEach((res) => {
+          if(res.estado === false){
+          this.currentCarritoPendiente = res;
+         const productoCarrito = new CarritoProducto(
+           this.currentCarritoPendiente.id,
+           this.producto.id,
+           this.cantidad,
+           this.productosFormulario
+         )
 
-            if (this.carritoPendiente[0].estado === false){
-              const productoCarrito = new CarritoProducto(
-                this.carritoPendiente[0].id,
-                this.producto.id,
-                this.cantidad,
-                this.productosFormulario
-              )
-              this.firestoreService.crearCarritoProducto(productoCarrito.carrito_Id,productoCarrito.productoId,productoCarrito.cantidad,productoCarrito.productos)
-              .then((resp) => console.log(resp))
-              .catch((err) => console.log(err))
-            }
-    }else {
-        const productoCarrito = new CarritoProducto(
-          this.carritoPendiente[0].id,
-          this.producto.id,
-          this.cantidad,
-          this.productosFormulario
-        )
-        this.firestoreService.crearCarritoProducto(productoCarrito.carrito_Id,productoCarrito.productoId,productoCarrito.cantidad,productoCarrito.productos)
-        .then(() => console.log('CREADO CON EXITO'))
-        .catch((err) => console.log(err))
+
+         console.log(productoCarrito);
+
+          // console.log(productoCarrito);
+         this.firestoreService.createCarritoProducto(productoCarrito.carrito_Id,productoCarrito.productoId,productoCarrito.cantidad,productoCarrito.productos)
+         .then(() => console.log('CREADO CON EXITO'))
+         .catch((err) => console.log(err))
       }
-        
-
-  }
-
-
+    })
+    }
   async editarProducto(){
-    await this.firestoreService.crearCarritoProducto(this.productoEditar.carrito_Id,this.productoEditar.productoId,this.productoEditar.cantidad,this.productoEditar[0])
-    .then(() => console.log('CREADO CON EXITO'))
-    .catch((err) => console.log(err))
+  //  await this.firestoreService.createCarritoProducto(this.productoEditar.carrito_Id,this.productoEditar.productoId,this.productoEditar.cantidad,this.productoEditar[0])
+  //  .then(() => console.log('CREADO CON EXITO'))
+  //  .catch((err) => console.log(err))
+
+    await this.firestoreService.getCarrito().subscribe((res) => console.log(res))
   }
 
 

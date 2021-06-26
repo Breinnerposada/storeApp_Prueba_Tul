@@ -1,41 +1,38 @@
-<nz-drawer [nzBodyStyle]="{ overflow: 'auto' }"
-    [nzMaskClosable]="false"
-    [nzWidth]="720"
-    [nzVisible]="visible"
-    nzTitle="Create" 
-    [nzFooter]="footerTpl" 
-    (nzOnClose)="close()">
+<nz-drawer [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="720" [nzVisible]="visible" [nzFooter]="nzFooter" nzTitle="Create" (nzOnClose)="close()">
 
 
     <div class="contenedor">
-
-        <div class="contenedor-card" *ngFor="let item of productoCarrito">
-            <div class="contenedor-imagen" [style]="item[0].url_image | domSanatizer"></div>
-            <button nz-button nz-popover nzPopoverTitle="Opciones" [nzPopoverContent]="content">
-        <ng-template #content>
+        <div class="content" *ngFor="let item of productoCarrito">
+            <div class="contenedor-card">
+                <div class="contenedor-imagen" [style]="item[0].url_image | domSanatizer"></div>
+                <button nz-button nz-popover nzPopoverTitle="Opciones" [nzPopoverContent]="content">
+            <ng-template #content>
           <div class="contendor">
             <button nz-button style="background-color: #6C63FF; color: #ffffff; margin-bottom: 5px;" (click)="editarProducto(item)">
               Editar
             </button>
 
-            <button nz-button style="background-color: red; color: #ffffff;" (click)="eliminarProducto(item.id)">
+                <button nz-button style="background-color: red; color: #ffffff;" (click)="eliminarProducto(item.id)">
               Eliminar
             </button>
+            </div>
+            </ng-template>
+            <div class="contenedor-card__body">
+                <div class="carrito-titulo text-aling">{{item.quantity}} X {{item[0].nombre}}</div>
+                <div class="carrito-descripcion text-aling">{{item[0].descripcion}}</div>
+                <div class="carrito-precio text-aling">$ {{item[0].precio |number}}</div>
+            </div>
+            </button>
         </div>
-        </ng-template>
-        <div class="contenedor-card__body">
-            <div class="carrito-titulo text-aling">{{item.quantity}} X {{item[0].nombre}}</div>
-            <div class="carrito-descripcion text-aling">{{item[0].descripcion}}</div>
-            <div class="carrito-precio text-aling">$ {{item[0].precio |number}}</div>
-        </div>
-        </button>
     </div>
-    </div>
-    <ng-template #footerTpl>
+    <ng-template #nzFooter>
         <div class="footer-menu">
-            <strong>Precio total: </strong>
-            <button nz-button class="btn-succes" (click)="close()">Submit</button>
+            <strong>Precio total: $ {{precioTotal |number}}</strong>
+            <button nz-button class="btn-succes" (click)="updateCarrito(productoCarrito)">Comprar</button>
             <button nz-button class="btn-cancel" (click)="close()">Cancel</button>
         </div>
     </ng-template>
+
+    </div>
+
 </nz-drawer>

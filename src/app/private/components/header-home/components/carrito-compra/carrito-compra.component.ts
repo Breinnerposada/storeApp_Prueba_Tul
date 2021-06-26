@@ -12,14 +12,34 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 export class CarritoCompraComponent implements OnInit {
   @Input() visible:any;
   @Input() carritoProducto :any;
-  productoCarrito:any = []
+  productoCarrito:any[] = []
   update: boolean = false
+  id;
+  estado;
+  precioTotal:number = 0;
   constructor(private firestoreService: FirestoreService,private modalNgz: NzModalService) { }
 
   ngOnInit(): void {
-    this.carritoProducto.forEach((resp) => {
-      this.productoCarrito.push(...[resp])
-    });
+
+  this.firestoreService.getCarrito().subscribe((res:any[]) => {
+      res.forEach(r => {
+        if(r.estado === false){
+          this.estado = r
+          this.carritoProducto.forEach((resp) => {
+            console.log(resp);
+          if (this.estado.id === resp.carritoId){
+            this.productoCarrito.push(...[resp])
+            this.productoCarrito.forEach((r) => {
+              this.precioTotal += r[0].precio * r.quantity;
+            })
+          }
+            })
+        }
+      })
+  })
+
+
+    
   }
 
   close(): void {
@@ -47,6 +67,18 @@ export class CarritoCompraComponent implements OnInit {
     this.firestoreService.deleteCarritoProducto(id)
     .then(() => console.log('PRODUCTO ELIMINADO'))
     .catch((err) => console.log(err))
+  }
+
+
+  updateCarrito(id:any[]){
+  id.forEach(res => this.id = res.carritoId);
+    this.firestoreService.updateCarrito(this.id)
+    .then(r => console.log('Carrito comprado'))
+    .catch(err => console.log(err));
+  }
+
+  calcularPrecio(){
+
   }
 
 
