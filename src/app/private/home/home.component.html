@@ -10,7 +10,7 @@
             <strong>Comidas Rápidas</strong>
             <app-cards-productos-rapidos [productos]="productos"></app-cards-productos-rapidos>
         </div>
-        <div class="productos-rapidos" *ngIf="productos.length === 0">
+        <div class="productos-rapidos" *ngIf="productos">
             <div class="contenedor-card">
                 <div class="card-container" *ngFor="let item of [1,1,1,1,1]">
                     <nz-card nzHoverable class="card" [nzCover]="coverTemplate">

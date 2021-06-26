@@ -15,6 +15,9 @@ export class HeaderHomeComponent implements OnInit {
   constructor(public auth: AuthService, private firestoreService: FirestoreService) { }
 
   ngOnInit(): void {
+    this.firestoreService.solovista.subscribe((resp) => {
+      this.visible = resp;
+    })
   }
 
   logout(){

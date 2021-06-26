@@ -1,61 +1,91 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { IProducto, IProductoCarrito } from '../../interface/iproducto';
+import {AngularFirestoreCollection} from '@angular/fire/firestore'
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
-  @Output() carritoActualizado: EventEmitter<any> = new EventEmitter<any>();
-  constructor(private firestore: AngularFirestore) { }
+  @Output() solovista: EventEmitter<any> = new EventEmitter<any>() ;
+  productos: Observable<any[]>;
+  productosCarrito: Observable<any[]>;
+  carts: Observable<IProducto[]>;
 
-  //TRAER TODOS LOS PRODUCTOS
-  public getProducts(){
-    return this.firestore.collection('products').valueChanges();
+  productoCarritoCollection;
+  private productoCollection: AngularFirestoreCollection<IProducto>
+  private cartsCollection: AngularFirestoreCollection
+
+  constructor(private firestore: AngularFirestore) { 
+
+    this.productoCollection = this.firestore.collection<IProducto>("products");
+    this.productoCarritoCollection = this.firestore.collection<IProductoCarrito>("product_carts");
+    this.cartsCollection = this.firestore.collection("carts");
+    this.getProducts();
+    this.getCarrito();
+    this.getCarritoProducto();
+    console.log(this.productos);
   }
 
-  crearCarritoProducto(carritoId: number,productoId:string,quantity:number,productos:[]) {
-    return new Promise<any>((resolve, reject) =>{
-      this.firestore.collection("product_carts")
-      .add({carritoId,productoId,quantity,productos})
-      .then((resp) => console.log(resp))
-      .catch((err) => console.log(err))
+  //PETICION DE LA DATA
+  public getProducts(){
+    return this.productoCollection.valueChanges();
+  }
+  
+  public getCarrito(){
+    return this.cartsCollection.valueChanges();
+  }
+  public getCarritoProducto(){
+      return  this.productoCarritoCollection.valueChanges()
+    }
+
+//creacion del acrrito producto
+  crearCarritoProducto(carritoId: string,productoId:string,quantity:number,productos:IProducto[]):Promise<void> {
+  return new Promise(async(resolve,rejects)  =>  {
+      try {
+        const id = this.firestore.createId();
+        const data = {id, productoId, quantity, ...productos}
+        const resultado = await this.productoCarritoCollection.doc(id).set(data);
+        console.log(resultado);
+        resolve(resultado)
+      } catch (error) {
+        rejects(error.message )
+      }
   })
 }
 
-  getCarritoProducto(){
-    return this.firestore.collection("product_carts").valueChanges();
+
+
+crearCarrito( idCarrito:string, productos:IProducto ):Promise<void>{
+  return new Promise(async(resolve,rejects)  =>  {
+    try {
+      const id = idCarrito || Date.now().toString();
+      const estado = false;
+      const data = {id, estado, ...productos}
+      const resultado = await this.cartsCollection.doc(id).set(data)
+      resolve(resultado)
+    } catch (error) {
+      rejects(error.message )
+    }
+})
+}
+
+deleteCarritoProducto(  productoId:string  ):Promise<void> {
+  return new Promise(async (resolve,reject)  => {
+
+  try {
+    const resultado = await this.productoCarritoCollection.doc(productoId).delete()
+  } catch (error) {
+    reject(error.message)
   }
 
-  deleteCarritoProducto(productoId:any) {
-    console.log(productoId);
-   return this.firestore.collection("product_carts")
-   .doc(productoId).delete()
-   .then(() => console.log('Eliminado'))
-   .catch((err) => console.log(err))
-  }
+
+  })
 
 
-  listarCarrito(){
-     return this.firestore.collection("carts").valueChanges();
-  }
 
-  crearCarrito(){
-    const id = Date.now()
-    const status = false;
-    return new Promise<any>((resolve,reject) => {
-      this.firestore.collection("carts")
-     .add({id,status})
-     .then((resp) => console.log(resp))
-     .catch((err) => console.log(err))
-    })
-  }
-  
-
-  updateCarritoCompra(data){
-    return this.firestore.collection("carts")
-    .doc(data.payload.doc.id)
-    .set({status: true});
-  }
-
+}
 
 }

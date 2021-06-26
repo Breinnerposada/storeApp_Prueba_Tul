@@ -18,16 +18,13 @@ export class CarritoCompraComponent implements OnInit {
 
   ngOnInit(): void {
     this.carritoProducto.forEach((resp) => {
-      console.log(resp);
-      this.productoCarrito.push(...resp.productos)
-      console.log(this.productoCarrito);
+      this.productoCarrito.push(...[resp])
     });
-
-    console.log(this.carritoProducto);
   }
 
   close(): void {
     this.visible = false;
+    this.firestoreService.solovista.emit(this.visible);
   }
 
   editarProducto(item:any){
@@ -37,7 +34,7 @@ export class CarritoCompraComponent implements OnInit {
       nzTitle: item.nombre,
       nzContent: ModalProductoComponent,
       nzComponentParams: {
-        producto:  item,
+        productoEditar:  item,
         update: this.update = true
       },
       nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000)),
@@ -48,8 +45,8 @@ export class CarritoCompraComponent implements OnInit {
 
   eliminarProducto(id){
     this.firestoreService.deleteCarritoProducto(id)
-    .then(()=> console.log(this.carritoProducto))
-    .catch((err)=> console.log(err))
+    .then(() => console.log('PRODUCTO ELIMINADO'))
+    .catch((err) => console.log(err))
   }
 
 

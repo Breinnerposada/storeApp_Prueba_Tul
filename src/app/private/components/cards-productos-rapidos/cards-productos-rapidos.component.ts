@@ -25,6 +25,7 @@ export class CardsProductosRapidosComponent implements OnInit {
       nzBodyStyle: {height: '500px', width: '1100px'},
       nzStyle: {height: '500px', width: '1100px'},
       nzTitle: item.nombre,
+      nzFooter: null,
       nzContent: ModalProductoComponent,
       nzComponentParams: {
         producto:  item
