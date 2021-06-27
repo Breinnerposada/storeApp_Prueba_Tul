@@ -11,12 +11,18 @@ export class HeaderHomeComponent implements OnInit {
   visible = false;
   estado;
   contenidoCarrito :any;
+  usuario: any[] = []
   @Input() productos:any;
   @Input() carritoProducto:any[] = [];
   currentCarritoProducto:any[] = []
   constructor(public auth: AuthService, private firestoreService: FirestoreService) { }
 
   ngOnInit(): void {
+  this.auth.user$.subscribe(r => {
+    this.usuario.push(r)
+    console.log(this.usuario);
+  })
+
     this.firestoreService.solovista.subscribe((resp) => {
       this.visible = resp;
     })

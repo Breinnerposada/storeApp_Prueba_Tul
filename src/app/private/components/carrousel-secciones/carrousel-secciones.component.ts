@@ -58,7 +58,7 @@ export class CarrouselSeccionesComponent implements OnInit {
     this.alerta = true;
     setTimeout(()=>{
       this.alerta = false;
-    },1500)
+    },200)
   }
 
 }

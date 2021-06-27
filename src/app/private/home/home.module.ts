@@ -11,6 +11,7 @@ import { ModalProductoComponent } from '../components/carrousel-secciones/compon
 import { DomSanatizerPipe } from 'src/app/pipes/dom-sanatizer.pipe';
 import { FormsModule } from '@angular/forms';
 import { CarritoCompraComponent } from 'src/app/private/components/header-home/components/carrito-compra/carrito-compra.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 
 @NgModule({

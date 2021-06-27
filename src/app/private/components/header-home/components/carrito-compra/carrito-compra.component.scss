@@ -8,6 +8,19 @@
     gap: 2%;
 }
 
+.contenido{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+}
+
+.imagen-empty{
+    height: 60%;
+    width: 60%;
+}
+
 .contenedor {
     height: 100%;
     width: 100%;

@@ -8,12 +8,16 @@ import { ModalProductoComponent } from '../carrousel-secciones/components/modal-
   styleUrls: ['./cards-productos-rapidos.component.scss']
 })
 export class CardsProductosRapidosComponent implements OnInit {
-  @Input() productos:any;
+  @Input() productos:any[];
+  @Input() productosChatarra:any[];
+  @Input() productosSaludable:any[];
+  productosSaludables:any[] = []
   isVisible :boolean = false;
   elementActive = false;
   constructor(private modalNgz: NzModalService) { }
 
   ngOnInit(): void {
+
   }
 
   showModal(item:any): void {

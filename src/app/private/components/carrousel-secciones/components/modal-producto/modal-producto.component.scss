@@ -64,3 +64,21 @@
     border: none;
     box-shadow: 0px 4px 16px rgb(0 0 0 / 8%);
 }
+
+.btn-agg{
+    width: 40%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    .btn-minus{
+        width: 20%;
+        cursor: pointer;
+        color: red;
+    }
+    .btn-plus{
+        cursor: pointer;
+        width: 20%;
+        color: green;
+    }
+}

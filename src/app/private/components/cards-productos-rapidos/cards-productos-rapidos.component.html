@@ -1,14 +1,16 @@
-<div class="contenedor">
+<div class="contenedor" *ngIf="productos">
     <div class="card-container" *ngFor="let item of productos" (click)="createComponentModal(item)">
         <nz-card nzHoverable class="card" [nzCover]="coverTemplate">
-            <nz-card-meta [nzTitle]="item.nombre" [nzDescription]="item.descripcion"></nz-card-meta>
+            <div class="card-informacion">
+                <nz-card-meta [nzTitle]="item.nombre" [nzDescription]="item.descripcion" ></nz-card-meta>
+            </div>
             <div class="informacion-producto">
                 <span> <i class="fas fa-dollar-sign"></i> {{item.precio}}</span>
-                <nz-rate nzAllowHalf></nz-rate>
+                <nz-rate [ngModel]="item.score" nzAllowHalf disabled></nz-rate>
             </div>
         </nz-card>
         <ng-template #coverTemplate>
-            <img alt="example" [src]="item.url_image" class="img-card" />
+            <div class="contenedor-imagen" [style]="item.url_image|domSanatizer"></div>
         </ng-template>
     </div>
 </div>

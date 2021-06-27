@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FirestoreService } from '../../../../../services/firestore/firestore.service';
 import { IProducto } from '../../../../../interface/iproducto';
 import { ModalProductoComponent } from '../../../carrousel-secciones/components/modal-producto/modal-producto.component';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-carrito-compra',
@@ -11,35 +11,59 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 })
 export class CarritoCompraComponent implements OnInit {
   @Input() visible:any;
-  @Input() carritoProducto :any;
+  carritoProducto :any[] = [];
   productoCarrito:any[] = []
+  currentProductoCarrito:any[] = []
   update: boolean = false
   id;
   estado;
   precioTotal:number = 0;
-  constructor(private firestoreService: FirestoreService,private modalNgz: NzModalService) { }
+    
+    constructor(private firestoreService: FirestoreService,private modalNgz: NzModalService) { }
 
   ngOnInit(): void {
-
-  this.firestoreService.getCarrito().subscribe((res:any[]) => {
-      res.forEach(r => {
-        if(r.estado === false){
-          this.estado = r
-          this.carritoProducto.forEach((resp) => {
-            console.log(resp);
-          if (this.estado.id === resp.carritoId){
-            this.productoCarrito.push(...[resp])
-            this.productoCarrito.forEach((r) => {
-              this.precioTotal += r[0].precio * r.quantity;
-            })
-          }
-            })
-        }
+  
+    this.firestoreService.getCarritoProducto().subscribe(r => {
+      this.carritoProducto.push(...r)
+      this.firestoreService.productoSeleccionado.subscribe((r) => {
+        console.log('suscripcion');
+        console.log(r);
       })
-  })
+    })
+
+    this.initOberservable();
 
 
-    
+
+  }
+
+  ngOnChanges(): void {
+    //this.firestoreService.getCarritoProducto().subscribe(r => this.carritoProducto.push(...r))
+  //  this.initOberservable();
+
+    //console.log('soy el onchange');
+  }
+
+  initOberservable(){
+    this.productoCarrito = [];
+   this.carritoProducto = [];
+    if(this.carritoProducto){
+      this.firestoreService.getCarrito().subscribe((res:any[]) => {
+        res.forEach(r => {
+          if(r.estado === false){
+            this.estado = r
+            this.carritoProducto.forEach((resp) => {
+            if (this.estado.id === resp.carritoId){
+              this.productoCarrito.push(...[resp])
+              this.productoCarrito.forEach((r) => {
+                this.precioTotal += r[0].precio * r.quantity;
+              })
+            }
+              })
+          }
+        })
+    })
+    }
   }
 
   close(): void {
@@ -64,17 +88,25 @@ export class CarritoCompraComponent implements OnInit {
   }
 
   eliminarProducto(id){
+    console.log(id);
     this.firestoreService.deleteCarritoProducto(id)
-    .then(() => console.log('PRODUCTO ELIMINADO'))
+    .then((r) => {
+      console.log(this.productoCarrito);
+    })
     .catch((err) => console.log(err))
+
+    
   }
 
 
   updateCarrito(id:any[]){
   id.forEach(res => this.id = res.carritoId);
     this.firestoreService.updateCarrito(this.id)
-    .then(r => console.log('Carrito comprado'))
-    .catch(err => console.log(err));
+      .then(r => {
+        this.close()
+        window.location.reload()
+      })
+      .catch(err => console.log(err));
   }
 
   calcularPrecio(){

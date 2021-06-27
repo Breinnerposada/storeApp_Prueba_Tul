@@ -1,7 +1,7 @@
 <div class="contenedor-header">
     <div class="contendor-header__link">
         <div class="logo">
-            <img src="../../../../assets/undraw_Hamburger_8ge6.svg" alt="" srcset="" class="imagen-logo">
+            <img src="../../../../assets/undraw_On_the_way_re_swjt.svg" alt="" srcset="" class="imagen-logo">
         </div>
         <div class="seccion">
             <input class="input-search" nz-input placeholder="Search !" />
@@ -18,8 +18,19 @@
                     <i class="fas fa-shopping-cart"></i>
                 </button>
             </nz-badge>
-            <button class="carrito-button"><i class="far fa-user"></i></button>
-            <button nz-button nzType="dashed" *ngIf="(auth.isAuthenticated$ | async )" (click)="logout()">Logout</button>
+            <button *ngIf="usuario.length !== 0" class="carrito-button"><nz-avatar nzIcon="user" [nzSrc]="usuario[0].picture" nz-dropdown [nzDropdownMenu]="menu"></nz-avatar></button>
+
+            <nz-dropdown-menu #menu="nzDropdownMenu" *ngIf="usuario.length !== 0" >
+                <ul nz-menu>
+                <li  nz-menu-item nzDisabled>Hola {{usuario[0].name|titlecase}}</li>
+                <li nz-menu-divider></li>
+                <li nz-menu-item><button></button></li>
+                <li nz-menu-item>2nd menu item</li>
+                </ul>
+              </nz-dropdown-menu>
+
+
+            <button nz-button nzType="dashed" *ngIf="(auth.isAuthenticated$ | async )" (click)="logout()" class="btn-logout">Logout</button>
         </div>
 
     </div>

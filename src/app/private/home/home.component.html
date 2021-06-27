@@ -7,10 +7,16 @@
             <app-carrousel-secciones></app-carrousel-secciones>
         </div>
         <div class="productos-rapidos" *ngIf="productos">
-            <strong>Comidas Rápidas</strong>
-            <app-cards-productos-rapidos [productos]="productos"></app-cards-productos-rapidos>
+            <nz-skeleton [nzActive]="true"  *ngIf="productos.length === 0"></nz-skeleton>
+            <strong *ngIf="productos.length !== 0">Comidas Rápidas</strong>
+            <app-cards-productos-rapidos [productos]="productoChatarra"></app-cards-productos-rapidos>
         </div>
         <div class="productos-rapidos" *ngIf="productos">
+            <nz-skeleton [nzActive]="true" *ngIf="productos.length === 0"></nz-skeleton>
+            <strong *ngIf="productos.length !== 0">Comidas Saludables</strong>
+            <app-cards-productos-rapidos [productos]="productosSaludables"></app-cards-productos-rapidos>
+        </div>
+        <div class="productos-rapidos" *ngIf="productos.length === 0">
             <div class="contenedor-card">
                 <div class="card-container" *ngFor="let item of [1,1,1,1,1]">
                     <nz-card nzHoverable class="card" [nzCover]="coverTemplate">

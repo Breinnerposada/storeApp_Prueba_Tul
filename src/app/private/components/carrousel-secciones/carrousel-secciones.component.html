@@ -2,21 +2,13 @@
     <nz-alert *ngIf="alerta" nzType="info" nzMessage="Muy pronto" nzDescription="Muy pronto agregaremos esta funcionalidad" nzShowIcon>
     </nz-alert>
     <div class="carousel-list">
-        <div class="carousel-list__slider">
-            <div class="carousel">
-                <div class="carousel__wrapper">
-                    <div class="carousel__container">
-                        <div class="carousel__slide" *ngFor="let item of imagen" (click)="activarAlerta()">
-                            <div class="carrousel-item">
-                                <figure class="figure-img">
-                                    <img [src]="item.img_url" alt="" class="carrousel-img">
-                                    <span>{{item.nombre}}</span>
-                                </figure>
-                            </div>
-                        </div>
-                    </div>
+        <div class="carousel__slide" *ngFor="let item of imagen" (click)="activarAlerta()">
+                <div class="carrousel-item">
+                    <figure class="figure-img">
+                            <img [src]="item.img_url" alt="" class="carrousel-img">
+                            <span>{{item.nombre}}</span>
+                    </figure>
                 </div>
-            </div>
         </div>
     </div>
 </div>

@@ -4,15 +4,19 @@ import { Observable } from 'rxjs';
 import { IProducto, IProductoCarrito } from '../../interface/iproducto';
 import {AngularFirestoreCollection} from '@angular/fire/firestore'
 import { map } from 'rxjs/operators';
+import { createHostListener } from '@angular/compiler/src/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
   @Output() solovista: EventEmitter<any> = new EventEmitter<any>() ;
+  @Output() productoSeleccionado: EventEmitter<any> = new EventEmitter<any>();
   productos: Observable<any[]>;
   productosCarrito: Observable<any[]>;
   carts: Observable<IProducto[]>;
+  resultado;
+  productoEmitido:any[] = []
 
   private productoCarritoCollection: AngularFirestoreCollection
   private productoCollection: AngularFirestoreCollection<IProducto>
@@ -26,26 +30,26 @@ export class FirestoreService {
     this.getProducts();
     this.getCarrito();
     this.getCarritoProducto();
-    console.log(this.productos);
   }
 
   //PETICION DE LA DATA
   public getProducts(){
     return this.productoCollection.valueChanges();
   }
+   
   
   public getCarrito(){
     return this.cartsCollection.valueChanges();
   }
   public getCarritoProducto(){
-      return this.productoCarritoCollection.valueChanges()
-    }
+    return this.productoCarritoCollection.valueChanges()
+  }
 
-//creacion del acrrito producto
+//creacion del carrito producto
   createCarritoProducto(carritoId: string,productoId:string,quantity:number,productos:IProducto[]):Promise<void> {
   return new Promise(async(resolve,rejects)  =>  {
       try {
-        const id = this.firestore.createId();
+        const id = productoId || this.firestore.createId();
         const data = {id,carritoId, productoId, quantity, ...productos}
         const resultado = await this.productoCarritoCollection.doc(id).set(data);
         console.log(resultado);
@@ -74,12 +78,18 @@ createCarrito( idCarrito:string):Promise<void>{
 
   //ELIMINACION DE LOS PRODUCTOS
 deleteCarritoProducto(  productoId:string  ):Promise<void> {
+  console.log(productoId);
   return new Promise(async (resolve,reject)  => {
   try {
-    const resultado = await this.productoCarritoCollection.doc(productoId).delete()
-    resolve(resultado)
+    this.resultado = await this.productoCarritoCollection.doc(productoId).delete()
+    .then( () => {
+    resolve(this.resultado)
+    console.log(this.resultado);
+    }
+    )
   } catch (error) {
     reject(error.message)
+    console.log(this.resultado);
   }
   })
 }
@@ -94,8 +104,7 @@ deleteCarritoProducto(  productoId:string  ):Promise<void> {
         const id = idCarrito;
         const estado = true;
         const data = {id, estado}
-        const resultado = await this.cartsCollection.doc(id).set(data)
-        console.log(resultado);
+        const resultado = await this.cartsCollection.doc(id).update(data); 
         resolve(resultado)
       } catch (error) {
         rejects(error.message )

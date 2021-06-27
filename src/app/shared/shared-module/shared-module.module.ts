@@ -8,12 +8,17 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzRateModule } from 'ng-zorro-antd/rate';
 import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+
 
 
 
@@ -21,6 +26,7 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
   declarations: [],
   imports: [
     CommonModule,
+    NzMessageModule,
     NzFormModule,
     NzInputModule,
     NzButtonModule,
@@ -34,12 +40,16 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
     NzInputNumberModule,
     NzDrawerModule,
     NzPopoverModule,
-    NzSkeletonModule
+    NzSkeletonModule,
+    NzAvatarModule,
+    NzDropDownModule,
+    NzIconModule
   ],
   exports: [
     CommonModule,
     NzFormModule,
     NzInputModule,
+    NzMessageModule,
     NzButtonModule,
     NzCarouselModule,
     NzBadgeModule,
@@ -51,7 +61,10 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
     NzInputNumberModule,
     NzDrawerModule,
     NzPopoverModule,
-    NzSkeletonModule
+    NzSkeletonModule,
+    NzAvatarModule,
+    NzDropDownModule,
+    NzIconModule
   ]
 })
 export class SharedModuleModule { }

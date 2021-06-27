@@ -3,7 +3,6 @@
     width: 100%;
     gap: 10px;
     display: grid;
-    grid-template-rows: 20% 78%;
 }
 
 strong {
@@ -31,3 +30,48 @@ strong {
     width: 100%;
 }
 
+
+.secciones {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+
+
+@media screen and (max-width: 1980px) {
+
+
+}
+@media screen and (max-width: 1280px) {
+
+
+}
+@media screen and (max-width: 800px) {
+
+}
+@media screen and (max-width: 480px) {
+.secciones{
+    width: 100%;
+}
+
+.productos-rapidos{
+    margin-bottom: 10pc;
+    padding: 20px;
+}
+
+span{
+    font-size: 20px;
+}
+
+strong{
+    font-size: 20px;
+}
+
+.contenedor-body{
+    display: grid;
+    grid-template-rows: 10% 48% 25%;
+    gap: 40px;
+    }
+
+}
