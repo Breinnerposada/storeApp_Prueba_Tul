@@ -11,7 +11,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 })
 export class CarritoCompraComponent implements OnInit {
   @Input() visible:any;
-  carritoProducto :any[] = [];
+  @Input() carritoProducto:any;
   productoCarrito:any[] = []
   currentProductoCarrito:any[] = []
   update: boolean = false
@@ -21,49 +21,16 @@ export class CarritoCompraComponent implements OnInit {
     
     constructor(private firestoreService: FirestoreService,private modalNgz: NzModalService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {  
   
-    this.firestoreService.getCarritoProducto().subscribe(r => {
-      this.carritoProducto.push(...r)
-      this.firestoreService.productoSeleccionado.subscribe((r) => {
-        console.log('suscripcion');
-        console.log(r);
-      })
-    })
-
-    this.initOberservable();
-
-
-
+    console.log(this.carritoProducto);
   }
-
-  ngOnChanges(): void {
-    //this.firestoreService.getCarritoProducto().subscribe(r => this.carritoProducto.push(...r))
-  //  this.initOberservable();
-
-    //console.log('soy el onchange');
-  }
+  
 
   initOberservable(){
-    this.productoCarrito = [];
-   this.carritoProducto = [];
-    if(this.carritoProducto){
-      this.firestoreService.getCarrito().subscribe((res:any[]) => {
-        res.forEach(r => {
-          if(r.estado === false){
-            this.estado = r
-            this.carritoProducto.forEach((resp) => {
-            if (this.estado.id === resp.carritoId){
-              this.productoCarrito.push(...[resp])
-              this.productoCarrito.forEach((r) => {
-                this.precioTotal += r[0].precio * r.quantity;
-              })
-            }
-              })
-          }
-        })
-    })
-    }
+    
+
+
   }
 
   close(): void {
@@ -91,7 +58,7 @@ export class CarritoCompraComponent implements OnInit {
     console.log(id);
     this.firestoreService.deleteCarritoProducto(id)
     .then((r) => {
-      console.log(this.productoCarrito);
+      this.productoCarrito.splice(id)
     })
     .catch((err) => console.log(err))
 
@@ -99,19 +66,17 @@ export class CarritoCompraComponent implements OnInit {
   }
 
 
-  updateCarrito(id:any[]){
-  id.forEach(res => this.id = res.carritoId);
-    this.firestoreService.updateCarrito(this.id)
+  updateCarrito(item){
+  const id = item[0].carritoId;
+  console.log(item);
+  console.log(id);
+    this.firestoreService.updateCarrito(id)
       .then(r => {
         this.close()
-        window.location.reload()
-      })
-      .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
   }
 
-  calcularPrecio(){
-
-  }
 
 
   

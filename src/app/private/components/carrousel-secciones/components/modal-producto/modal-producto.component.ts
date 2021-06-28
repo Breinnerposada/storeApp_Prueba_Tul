@@ -24,62 +24,63 @@ export class ModalProductoComponent implements OnInit {
   filtrado:any[] = [];
   cantidad:number = 1;
   curretCarrito:any[] = [];
+  carrito:any[] = [];
   productosFormulario:any = [];
   carritoPendiente:any[] = [];
   currentCarritoPendiente :any = [];
   currentProducto :any[] = []
+  productos;
   suscribe: Subscriber<any>
-  carrito :any = [];
   precioTotal = 0;
   constructor(private fb: FormBuilder, private firestoreService: FirestoreService,private modal: NzModalRef,private message: NzMessageService) {
    }
 
   ngOnInit(): void {
-    console.log(this.productoEditar);
-
     if(this.producto){
       this.currentProducto.push(...[this.producto])
       this.producto = this.currentProducto
       console.log(this.producto);
     }
-
-  this.initObservable()
-    
     if(this.productoEditar){
       console.log('es igual');
       this.producto = this.productoEditar;
       console.log(this.producto);
     }
     
+    this.initObservable();
     this.buildFormulario();
     
     
   }
 
   ngOnChanges(): void {
-    this.buildFormulario();
-    this.firestoreService.getCarrito().subscribe((res) => {
-      const filtrado = res.filter((r) => r.estado === false)
-      this.carritoPendiente.push(...[filtrado])
-    })
+   // this.buildFormulario();
   }
 
 
  
   initObservable(){
-    this.carritoPendiente = [];
-    this.firestoreService.getCarrito().subscribe((res) => {
-      this.filtrado = res.filter((r) => r.estado === false)
-      if (this.filtrado.length === 0){
-        this.firestoreService.createCarrito(null)
-        .then(r => {
+    this.firestoreService.getCarrito()
+    .subscribe((res:any)=> {
+      this.carrito = res.map((m) => {
+          return {
+            estado: m.payload.doc.data().estado,
+            id: m.payload.doc.data().id
+          }
         })
-        .catch((err) => console.log(err))
-      }else if (this.filtrado.length > 0){
-        this.carritoPendiente.push(...this.filtrado)
-      }
+      const filtradoEstado = this.carrito.filter((r) => r.estado === false);
+        if (filtradoEstado.length === 0){
+          this.firestoreService.createCarrito(null)
+          .then((f) => {})
+          .catch((err) => console.error(err))
+        }
+
+        this.filtrado = this.carrito.filter((r) => r.estado === false);
+      
     })
-        
+    
+
+
   }
 
 
@@ -104,7 +105,6 @@ export class ModalProductoComponent implements OnInit {
     const resultado = this.producto[0].precio * this.cantidad;
     return resultado
   }
-
   sumarCantidad(){
     this.cantidad = this.cantidad + 1;
     this.calcularCantidad()
@@ -119,23 +119,23 @@ export class ModalProductoComponent implements OnInit {
 
 
   async crearProductoCarrito(){
-    this.filtrado.forEach((res) => {
+    console.log(this.productosFormulario);
+      this.filtrado.forEach((res) => {
           if(res.estado === false){
+          console.log(this.filtrado);
           this.currentCarritoPendiente = res;
           console.log(this.productosFormulario);
         const productoCarrito = new CarritoProducto(
           this.currentCarritoPendiente.id,
           this.producto[0].id,
           this.cantidad,
-          this.productosFormulario
+          this.productosFormulario[0]
         )
-        console.log(productoCarrito);
         console.log(productoCarrito);
         this.firestoreService.createCarritoProducto(productoCarrito.carrito_Id,productoCarrito.productoId,productoCarrito.cantidad,productoCarrito.productos)
         .then((resp) => {
-        this.firestoreService.getCarritoProducto().subscribe((r) => this.firestoreService.productoSeleccionado.emit(r));
+        this.validateForm.reset()
         this.modal.destroy()
-        window.location.reload()
       })
       .catch((err) => console.log(err))
         this.startShowMessages()

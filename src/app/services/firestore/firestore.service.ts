@@ -26,31 +26,29 @@ export class FirestoreService {
 
     this.productoCollection = this.firestore.collection<IProducto>("products");
     this.productoCarritoCollection = this.firestore.collection<IProductoCarrito>("product_carts");
-    this.cartsCollection = this.firestore.collection("cart");
-    this.getProducts();
-    this.getCarrito();
-    this.getCarritoProducto();
+    this.cartsCollection = this.firestore.collection("carrito");
   }
 
   //PETICION DE LA DATA
   public getProducts(){
-    return this.productoCollection.valueChanges();
+    return this.productoCollection.snapshotChanges();
   }
    
   
   public getCarrito(){
-    return this.cartsCollection.valueChanges();
+    return this.cartsCollection.snapshotChanges();
   }
   public getCarritoProducto(){
-    return this.productoCarritoCollection.valueChanges()
+    return this.productoCarritoCollection.snapshotChanges()
   }
 
 //creacion del carrito producto
   createCarritoProducto(carritoId: string,productoId:string,quantity:number,productos:IProducto[]):Promise<void> {
+    console.log(productos);
   return new Promise(async(resolve,rejects)  =>  {
       try {
         const id = productoId || this.firestore.createId();
-        const data = {id,carritoId, productoId, quantity, ...productos}
+        const data = {id,carritoId, productoId, quantity, productos}
         const resultado = await this.productoCarritoCollection.doc(id).set(data);
         console.log(resultado);
         resolve(resultado)
@@ -104,7 +102,7 @@ deleteCarritoProducto(  productoId:string  ):Promise<void> {
         const id = idCarrito;
         const estado = true;
         const data = {id, estado}
-        const resultado = await this.cartsCollection.doc(id).update(data); 
+        const resultado = await this.cartsCollection.doc(id).set(data); 
         resolve(resultado)
       } catch (error) {
         rejects(error.message )
