@@ -79,15 +79,13 @@ deleteCarritoProducto(  productoId:string  ):Promise<void> {
   console.log(productoId);
   return new Promise(async (resolve,reject)  => {
   try {
-    this.resultado = await this.productoCarritoCollection.doc(productoId).delete()
+   const resultado = await this.productoCarritoCollection.doc(productoId).delete()
     .then( () => {
-    resolve(this.resultado)
-    console.log(this.resultado);
+    resolve(resultado)
     }
     )
   } catch (error) {
     reject(error.message)
-    console.log(this.resultado);
   }
   })
 }

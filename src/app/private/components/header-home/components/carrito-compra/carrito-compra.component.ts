@@ -11,7 +11,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 })
 export class CarritoCompraComponent implements OnInit {
   @Input() visible:any;
-  @Input() carritoProducto:any;
+  @Input() carritoProducto:any[] ;
   productoCarrito:any[] = []
   currentProductoCarrito:any[] = []
   update: boolean = false
@@ -24,13 +24,13 @@ export class CarritoCompraComponent implements OnInit {
   ngOnInit(): void {  
   
     console.log(this.carritoProducto);
+    if (this.carritoProducto){
+      this.calcularPrecioTotal();
+    }
   }
-  
 
-  initOberservable(){
-    
-
-
+  ngOnChanges(): void {
+   //this.calcularPrecioTotal()    
   }
 
   close(): void {
@@ -39,6 +39,7 @@ export class CarritoCompraComponent implements OnInit {
   }
 
   editarProducto(item:any){
+    console.log(item);
     const modal = this.modalNgz.create({
       nzBodyStyle: {height: '500px', width: '1100px'},
       nzStyle: {height: '500px', width: '1100px'},
@@ -55,14 +56,23 @@ export class CarritoCompraComponent implements OnInit {
   }
 
   eliminarProducto(id){
-    console.log(id);
-    this.firestoreService.deleteCarritoProducto(id)
+    const idProducto = id.productoId;
+    this.firestoreService.deleteCarritoProducto(idProducto)
     .then((r) => {
-      this.productoCarrito.splice(id)
     })
     .catch((err) => console.log(err))
 
     
+  }
+
+  calcularPrecioTotal(){
+    this.carritoProducto.forEach((r) => {
+      console.log(r);
+      const precios = r.productos.precio * r.quantity;
+      console.log(precios);
+      this.precioTotal = this.precioTotal + precios; 
+      console.log(this.precioTotal);
+    })
   }
 
 
@@ -70,11 +80,11 @@ export class CarritoCompraComponent implements OnInit {
   const id = item[0].carritoId;
   console.log(item);
   console.log(id);
-    this.firestoreService.updateCarrito(id)
-      .then(r => {
-        this.close()
-    })
-    .catch(err => console.log(err));
+  this.firestoreService.updateCarrito(id)
+    .then(r => {
+      this.close()
+  })
+  .catch(err => console.log(err));
   }
 
 

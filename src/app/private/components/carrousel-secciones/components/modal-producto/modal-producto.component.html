@@ -1,4 +1,4 @@
-<div class="contenedor" *ngIf="producto">
+<div class="contenedor" *ngIf="!productoEditar">
     <div class="contenedor-imagen" [style]="producto[0].url_image | domSanatizer"></div>
     <div class="contenedor-informacion">
         <div class="informacion-titulo">{{producto[0].nombre}}</div>
@@ -20,6 +20,25 @@
         </div>
     </div>
 </div>
+<div class="contenedor" *ngIf="productoEditar">
+    <div class="contenedor-imagen" [style]="producto.productos.url_image | domSanatizer"></div>
+    <div class="contenedor-informacion">
+        <div class="informacion-titulo">{{producto.productos.nombre}}</div>
+        <div class="informacion-detalada">
+            <div class="informacion__descripcion">{{producto.productos.descripcion}}</div>
+            <div class="informacion__sku"> sku: {{producto.productos.sku}}</div>
+            <div class="informacion__descripcion"> <i class="fas fa-dollar-sign"></i> Precio: {{producto.productos.precio}}</div>
+            <div class="informacion__precio"> <i class="fas fa-dollar-sign"></i> Total: {{producto.productos.precio * cantidad | number}} COP</div>
+        </div>
 
-
-
+        <div class="button-agregar">
+            <div class="btn-agg">
+                <button class="btn-plus" (click)="sumarCantidad()"><i nz-icon nzType="plus" nzTheme="outline"></i></button>
+                <span>{{cantidad}}</span>
+                <button class="btn-minus" (click)="restarCantidad()" *ngIf="cantidad > 0"><i nz-icon nzType="minus" nzTheme="outline"></i></button>
+            </div>
+            <button nz-button nzType="primary" (click)="crearProductoCarrito()" *ngIf="!update && cantidad > 0">Agregar</button>
+            <button nz-button nzType="primary" (click)="crearProductoCarrito()" *ngIf="update">Editar</button>
+        </div>
+    </div>
+</div>

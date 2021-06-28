@@ -30,6 +30,9 @@ export class ModalProductoComponent implements OnInit {
   currentCarritoPendiente :any = [];
   currentProducto :any[] = []
   productos;
+  filtradoEstado
+  productoCarrito;
+  resultado
   suscribe: Subscriber<any>
   precioTotal = 0;
   constructor(private fb: FormBuilder, private firestoreService: FirestoreService,private modal: NzModalRef,private message: NzMessageService) {
@@ -44,6 +47,7 @@ export class ModalProductoComponent implements OnInit {
     if(this.productoEditar){
       console.log('es igual');
       this.producto = this.productoEditar;
+      console.log(this.productoEditar);
       console.log(this.producto);
     }
     
@@ -67,17 +71,12 @@ export class ModalProductoComponent implements OnInit {
             estado: m.payload.doc.data().estado,
             id: m.payload.doc.data().id
           }
-        })
-      const filtradoEstado = this.carrito.filter((r) => r.estado === false);
-        if (filtradoEstado.length === 0){
-          this.firestoreService.createCarrito(null)
-          .then((f) => {})
-          .catch((err) => console.error(err))
-        }
-
-        this.filtrado = this.carrito.filter((r) => r.estado === false);
+        }) 
+        this.filtradoEstado = this.carrito.filter((r) => r.estado === false);
+        this.filtrado = this.carrito.filter((r) => r.estado === false)
+      })
       
-    })
+
     
 
 
@@ -86,7 +85,7 @@ export class ModalProductoComponent implements OnInit {
 
   buildFormulario(){
     console.log(this.producto);
-    if (this.producto){
+    if (!this.productoEditar){
       this.validateForm = this.fb.group({
         id: [this.producto[0].id, Validators.required],
         descripcion:[this.producto[0].descripcion, Validators.required],
@@ -99,11 +98,29 @@ export class ModalProductoComponent implements OnInit {
     });
       this.productosFormulario.push(...[this.validateForm.value]);
     }
+    if (this.productoEditar){
+      this.validateForm = this.fb.group({
+        id: [this.producto.productos.id, Validators.required],
+        descripcion:[this.producto.productos.descripcion, Validators.required],
+        nombre:[this.producto.productos.nombre, Validators.required],
+        precio:[this.producto.productos.precio, Validators.required],
+        seccion_Producto:[this.producto.productos.seccion_Producto, Validators.required],
+        sku:[this.producto.productos.sku, Validators.required],
+        url_image:[this.producto.productos.url_image, Validators.required],
+        cantidad:[this.cantidad, Validators.required]
+    });
+      this.productosFormulario.push(...[this.validateForm.value]);
+    }
   }
 
   calcularCantidad(){
-    const resultado = this.producto[0].precio * this.cantidad;
-    return resultado
+    if(this.productoEditar)[
+       this.resultado = this.producto.productos.precio * this.cantidad
+    ]
+    if(!this.productoEditar)[
+       this.resultado = this.producto[0].precio * this.cantidad
+      ]
+      return this.resultado
   }
   sumarCantidad(){
     this.cantidad = this.cantidad + 1;
@@ -119,22 +136,39 @@ export class ModalProductoComponent implements OnInit {
 
 
   async crearProductoCarrito(){
-    console.log(this.productosFormulario);
+    if (this.filtradoEstado.length === 0){
+      this.firestoreService.createCarrito(null)
+      .then(() =>{
+        console.log('Carrito Creado')
+        console.log(this.carrito);
+        console.log(this.filtrado);
+      })
+      this.filtrado = this.carrito.filter((r) => r.estado === false)
+    }
       this.filtrado.forEach((res) => {
           if(res.estado === false){
           console.log(this.filtrado);
           this.currentCarritoPendiente = res;
           console.log(this.productosFormulario);
-        const productoCarrito = new CarritoProducto(
-          this.currentCarritoPendiente.id,
-          this.producto[0].id,
-          this.cantidad,
-          this.productosFormulario[0]
-        )
-        console.log(productoCarrito);
-        this.firestoreService.createCarritoProducto(productoCarrito.carrito_Id,productoCarrito.productoId,productoCarrito.cantidad,productoCarrito.productos)
+          if(this.productoEditar){
+            this.productoCarrito = new CarritoProducto(
+              this.currentCarritoPendiente.id,
+              this.producto.productos.id,
+              this.cantidad,
+              this.productosFormulario[0]
+            )
+          }
+          if(this.productoEditar === undefined){
+            console.log('entro por aca');
+            this.productoCarrito = new CarritoProducto(
+              this.currentCarritoPendiente.id,
+              this.producto[0].id,
+              this.cantidad,
+              this.productosFormulario[0]
+            )
+          }
+        this.firestoreService.createCarritoProducto(this.productoCarrito.carrito_Id,this.productoCarrito.productoId,this.productoCarrito.cantidad,this.productoCarrito.productos)
         .then((resp) => {
-        this.validateForm.reset()
         this.modal.destroy()
       })
       .catch((err) => console.log(err))

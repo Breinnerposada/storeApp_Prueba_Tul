@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
           nombre : m.payload.doc.data().nombre ,
           precio: m.payload.doc.data().precio,
           score: m.payload.doc.data().score,
-          seccion_producto: m.payload.doc.data().seccion_producto ,
+          seccion_producto: m.payload.doc.data().seccion_producto,
           sku: m.payload.doc.data().sku,
           url_image: m.payload.doc.data().url_image
         }
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
       console.log(this.productos);
      
       this.productosSaludables = this.productos.filter((r) => r.seccion_producto === 2);
-      this.productoChatarra = this.productos.filter((m) => m.seccion_Producto === 1 || '1');
+      this.productoChatarra = this.productos.filter((m) => m.seccion_producto === 1);
       console.log('chatarra',this.productoChatarra);
       console.log('saludable',this.productosSaludables);
 
