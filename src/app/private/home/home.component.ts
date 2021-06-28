@@ -35,12 +35,9 @@ export class HomeComponent implements OnInit {
           url_image: m.payload.doc.data().url_image
         }
       })
-      console.log(this.productos);
      
       this.productosSaludables = this.productos.filter((r) => r.seccion_producto === 2);
       this.productoChatarra = this.productos.filter((m) => m.seccion_producto === 1);
-      console.log('chatarra',this.productoChatarra);
-      console.log('saludable',this.productosSaludables);
 
     })
 
@@ -56,7 +53,6 @@ export class HomeComponent implements OnInit {
         }
 
       })
-      console.log(this.carritoProducto);
 
     })
 

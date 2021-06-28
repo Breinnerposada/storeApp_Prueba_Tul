@@ -4,6 +4,7 @@
     gap: 5px;
     grid-template-columns: repeat(5, 20%);
 }
+
 .contenedor-imagen {
     height: 290px;
     width: 100%;
@@ -11,8 +12,6 @@
     background-size: cover;
     background-position: center;
 }
-
-
 
 .card {
     height: 450px;
@@ -33,88 +32,78 @@
     font-weight: 900;
 }
 
-
-.informacion-producto{
+.informacion-producto {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 @media screen and (max-width: 1980px) {
-
-    .card{
+    .card {
         height: 480px;
         width: 320px;
         margin-bottom: 20px;
         box-shadow: 0px 4px 16px rgb(0 0 0 / 20%);
     }
-
-    .imagen-template{
+    .imagen-template {
         width: 50%;
-     }
-
+    }
 }
-@media screen and (max-width: 1280px) {
 
-    .card{
+@media screen and (max-width: 1280px) {
+    .card {
         height: 490px;
         width: 300px;
         margin-bottom: 20px;
         box-shadow: 0px 4px 16px rgb(0 0 0 / 20%);
     }
-
-    .imagen-template{
+    .imagen-template {
         width: 50%;
-     }
-
+    }
 }
+
 @media screen and (max-width: 800px) {
-
-
-    .card{
+    .card {
         height: 550px;
         width: 320px;
         margin-bottom: 20px;
         box-shadow: 0px 4px 16px rgb(0 0 0 / 20%);
     }
-
-    .imagen-template{
+    .imagen-template {
         height: 100%;
         width: 50%;
-     }
+    }
 }
+
 @media screen and (max-width: 480px) {
-.contenedor{
-    width: 98%;
-    gap: 1%;
-    display: grid;
-    grid-template-columns: repeat(1, 100%);
-}
-.card-container{
-    height: 418px;
-}
-
-.img-card{
-    height: 420px;
-    width: 100%;
-}
-.informacion-producto{
-    font-size: 15px;
-    margin-top: 50px;
-}
-.card-informacion{
-    font-size: 18px;
-}
-
-strong{
-    font-size: 15px;
-}
-
-.card{
-    display: grid;
-    height: 100%;
-    width: 100%;
-    grid-template-columns: 40% 60%;
-    gap: 10px;
-}
+    .contenedor {
+        width: 98%;
+        gap: 1%;
+        display: grid;
+        grid-template-columns: repeat(1, 100%);
+    }
+    .card-container {
+        height: 418px;
+    }
+    .img-card {
+        height: 420px;
+        width: 100%;
+    }
+    .informacion-producto {
+        font-size: 15px;
+        margin-top: 50px;
+    }
+    .card-informacion {
+        font-size: 18px;
+    }
+    strong {
+        font-size: 15px;
+    }
+    .card {
+        display: grid;
+        height: 70%;
+        width: 100%;
+        grid-template-columns: 40% 60%;
+        gap: 10px;
+    }
 }

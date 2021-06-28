@@ -22,7 +22,6 @@ export class HeaderHomeComponent implements OnInit {
   ngOnInit(): void {
   this.auth.user$.subscribe(r => {
     this.usuario.push(r)
-    console.log(this.usuario);
   })
 
   
@@ -49,12 +48,10 @@ export class HeaderHomeComponent implements OnInit {
             productos: m.payload.doc.data().productos
             }
           })
-          console.log(this.carritoProducto);
           const filtradoEstado = this.carrito.filter((r) => r.estado === false)
           if(filtradoEstado.length > 0){
             this.currentCarritoProducto = this.carritoProducto.filter((r)=> r.carritoId === filtradoEstado[0].id)
           }
-          console.log(this.currentCarritoProducto);
         }
         )
       })

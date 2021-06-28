@@ -22,8 +22,6 @@ export class CarritoCompraComponent implements OnInit {
     constructor(private firestoreService: FirestoreService,private modalNgz: NzModalService) { }
 
   ngOnInit(): void {  
-  
-    console.log(this.carritoProducto);
     if (this.carritoProducto){
       this.calcularPrecioTotal();
     }
@@ -39,7 +37,6 @@ export class CarritoCompraComponent implements OnInit {
   }
 
   editarProducto(item:any){
-    console.log(item);
     const modal = this.modalNgz.create({
       nzBodyStyle: {height: '500px', width: '1100px'},
       nzStyle: {height: '500px', width: '1100px'},
@@ -67,19 +64,14 @@ export class CarritoCompraComponent implements OnInit {
 
   calcularPrecioTotal(){
     this.carritoProducto.forEach((r) => {
-      console.log(r);
       const precios = r.productos.precio * r.quantity;
-      console.log(precios);
       this.precioTotal = this.precioTotal + precios; 
-      console.log(this.precioTotal);
     })
   }
 
 
   updateCarrito(item){
   const id = item[0].carritoId;
-  console.log(item);
-  console.log(id);
   this.firestoreService.updateCarrito(id)
     .then(r => {
       this.close()

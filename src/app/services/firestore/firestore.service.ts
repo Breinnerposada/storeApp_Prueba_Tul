@@ -44,13 +44,11 @@ export class FirestoreService {
 
 //creacion del carrito producto
   createCarritoProducto(carritoId: string,productoId:string,quantity:number,productos:IProducto[]):Promise<void> {
-    console.log(productos);
   return new Promise(async(resolve,rejects)  =>  {
       try {
         const id = productoId || this.firestore.createId();
         const data = {id,carritoId, productoId, quantity, productos}
         const resultado = await this.productoCarritoCollection.doc(id).set(data);
-        console.log(resultado);
         resolve(resultado)
       } catch (error) {
         rejects(error.message )
@@ -76,7 +74,6 @@ createCarrito( idCarrito:string):Promise<void>{
 
   //ELIMINACION DE LOS PRODUCTOS
 deleteCarritoProducto(  productoId:string  ):Promise<void> {
-  console.log(productoId);
   return new Promise(async (resolve,reject)  => {
   try {
    const resultado = await this.productoCarritoCollection.doc(productoId).delete()
@@ -94,7 +91,6 @@ deleteCarritoProducto(  productoId:string  ):Promise<void> {
   //EDICION DEL CARRITO (CAMBIO DE ESTADO) 
 
   updateCarrito(idCarrito){
-    console.log(idCarrito);
     return new Promise(async(resolve,rejects)  =>  {
       try {
         const id = idCarrito;

@@ -42,13 +42,9 @@ export class ModalProductoComponent implements OnInit {
     if(this.producto){
       this.currentProducto.push(...[this.producto])
       this.producto = this.currentProducto
-      console.log(this.producto);
     }
     if(this.productoEditar){
-      console.log('es igual');
       this.producto = this.productoEditar;
-      console.log(this.productoEditar);
-      console.log(this.producto);
     }
     
     this.initObservable();
@@ -84,7 +80,6 @@ export class ModalProductoComponent implements OnInit {
 
 
   buildFormulario(){
-    console.log(this.producto);
     if (!this.productoEditar){
       this.validateForm = this.fb.group({
         id: [this.producto[0].id, Validators.required],
@@ -125,12 +120,10 @@ export class ModalProductoComponent implements OnInit {
   sumarCantidad(){
     this.cantidad = this.cantidad + 1;
     this.calcularCantidad()
-    console.log(this.cantidad); 
 }
   restarCantidad(){
     this.cantidad = this.cantidad - 1;
     this.calcularCantidad()
-    console.log(this.cantidad); 
 }
 
 
@@ -139,17 +132,12 @@ export class ModalProductoComponent implements OnInit {
     if (this.filtradoEstado.length === 0){
       this.firestoreService.createCarrito(null)
       .then(() =>{
-        console.log('Carrito Creado')
-        console.log(this.carrito);
-        console.log(this.filtrado);
       })
       this.filtrado = this.carrito.filter((r) => r.estado === false)
     }
       this.filtrado.forEach((res) => {
           if(res.estado === false){
-          console.log(this.filtrado);
           this.currentCarritoPendiente = res;
-          console.log(this.productosFormulario);
           if(this.productoEditar){
             this.productoCarrito = new CarritoProducto(
               this.currentCarritoPendiente.id,
@@ -159,7 +147,6 @@ export class ModalProductoComponent implements OnInit {
             )
           }
           if(this.productoEditar === undefined){
-            console.log('entro por aca');
             this.productoCarrito = new CarritoProducto(
               this.currentCarritoPendiente.id,
               this.producto[0].id,
@@ -185,7 +172,6 @@ export class ModalProductoComponent implements OnInit {
         concatMap(() => this.message.info('Loading finished is finished', { nzDuration: 50 }).onClose!)
       )
       .subscribe(() => {
-        console.log('All completed!');
       });
   }
 
