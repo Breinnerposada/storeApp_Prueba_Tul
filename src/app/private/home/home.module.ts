@@ -12,6 +12,7 @@ import { DomSanatizerPipe } from 'src/app/pipes/dom-sanatizer.pipe';
 import { FormsModule } from '@angular/forms';
 import { CarritoCompraComponent } from 'src/app/private/components/header-home/components/carrito-compra/carrito-compra.component';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { ListaCarritoComponent } from '../components/header-home/components/lista-carrito/lista-carrito.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     CardsProductosRapidosComponent,
     ModalProductoComponent,
     CarritoCompraComponent,
+    ListaCarritoComponent,
     DomSanatizerPipe
   ],
   imports: [
@@ -30,6 +32,6 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     HomeRoutingModule,
     SharedModuleModule,
   ],
-  exports: [HeaderHomeComponent,HomeComponent,CarrouselSeccionesComponent,CardsProductosRapidosComponent,ModalProductoComponent,CarritoCompraComponent]
+  exports: [HeaderHomeComponent,HomeComponent,ListaCarritoComponent,CarrouselSeccionesComponent,CardsProductosRapidosComponent,ModalProductoComponent,CarritoCompraComponent]
 })
 export class HomeModule { }

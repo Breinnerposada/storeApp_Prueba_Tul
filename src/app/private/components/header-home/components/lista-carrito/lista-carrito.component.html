@@ -1,0 +1,21 @@
+<nz-drawer [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="720" [nzVisible]="visibleCarrito" nzTitle="Lista de ordenes realizadas" (nzOnClose)="close()">
+
+
+    <div class="contenedor" *ngIf="carrito.length !== 0">
+        <div class="content" *ngFor="let item of carrito">
+            <nz-card>
+                <div class="card-label__id">
+                    <p>{{item.id}}</p>
+                </div>
+                <div class="card-label__progress">
+                    <div [ngStyle]=" {background: !item.status ? '#3AFF00' : '#E81717'  } ">Hola</div>
+
+                </div>
+            </nz-card>
+        </div>
+    </div>
+
+    <div class="contenido" *ngIf="carrito.length === 0">
+        <img class="imagen-empty" src="../../../../../../assets/undraw_empty_cart_co35.svg" alt="">
+    </div>
+</nz-drawer>

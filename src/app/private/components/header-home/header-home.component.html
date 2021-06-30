@@ -16,19 +16,12 @@
             <nz-badge [nzCount]="currentCarritoProducto.length">
                 <button class="carrito-button" (click)="open()">
                     <i class="fas fa-shopping-cart"></i>
-                </button>
+            </button>
             </nz-badge>
+            <button class="carrito-button" (click)="openCarrito()">
+                <i class="fas fa-th-list"></i>
+        </button>
             <button *ngIf="usuario.length !== 0" class="carrito-button"><nz-avatar nzIcon="user" [nzSrc]="usuario[0].picture" nz-dropdown [nzDropdownMenu]="menu"></nz-avatar></button>
-
-            <nz-dropdown-menu #menu="nzDropdownMenu" *ngIf="usuario.length !== 0" >
-                <ul nz-menu>
-                <li  nz-menu-item nzDisabled>Hola {{usuario[0].name|titlecase}}</li>
-                <li nz-menu-divider></li>
-                <li nz-menu-item><button></button></li>
-                <li nz-menu-item>2nd menu item</li>
-                </ul>
-              </nz-dropdown-menu>
-
 
             <button nz-button nzType="dashed" *ngIf="(auth.isAuthenticated$ | async )" (click)="logout()" class="btn-logout">Logout</button>
         </div>
@@ -36,5 +29,9 @@
     </div>
     <div class="contenedor" *ngIf="visible">
         <app-carrito-compra [visible]="visible" [carritoProducto]="currentCarritoProducto"></app-carrito-compra>
+    </div>
+
+    <div class="contenedor" *ngIf="visibleCarrito">
+        <app-lista-carrito [visibleCarrito]="visibleCarrito" [carrito]="carrito"></app-lista-carrito>
     </div>
 </div>

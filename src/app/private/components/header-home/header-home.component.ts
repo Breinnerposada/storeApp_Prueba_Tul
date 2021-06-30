@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class HeaderHomeComponent implements OnInit {
   visible = false;
+  visibleCarrito = false;
   estado;
   contenidoCarrito :any;
   usuario: any[] = []
@@ -65,6 +66,10 @@ export class HeaderHomeComponent implements OnInit {
 
   open(): void {
     this.visible = true;
+  }
+
+  openCarrito(): void {
+    this.visibleCarrito = true;
   }
 
 

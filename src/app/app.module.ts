@@ -27,6 +27,7 @@ registerLocaleData(es);
   declarations: [
     AppComponent,
     Page404Component,
+
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
