@@ -157,7 +157,7 @@ export class ModalProductoComponent implements OnInit {
           }
         this.firestoreService.createCarritoProducto(this.productoCarrito.carrito_Id,this.productoCarrito.productoId,this.productoCarrito.cantidad,this.productoCarrito.productos)
         .then((resp) => {
-        console.log(this.productosFormulario);
+        this.message.create('success', `Producto Agregado Correctamente`);  
         this.modal.destroy()
       })
       .catch((err) => console.log(err))

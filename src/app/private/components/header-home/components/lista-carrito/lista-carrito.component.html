@@ -1,16 +1,16 @@
-<nz-drawer [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="720" [nzVisible]="visibleCarrito" nzTitle="Lista de ordenes realizadas" (nzOnClose)="close()">
+<nz-drawer [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="720" [nzVisible]="visibleCarrito" nzTitle="Lista de ordenes" (nzOnClose)="close()">
 
 
     <div class="contenedor" *ngIf="carrito.length !== 0">
         <div class="content" *ngFor="let item of carrito">
             <div class="card" [ngStyle]=" {background: item.estado ? '#3aff008c' : 'rgb(232 23 23 / 85%)'  } ">
                 <div class="card-label__id">
-                    <p>{{item.id}}</p>
+                    <p>Orden N° {{item.id}}</p> <span *ngIf="!item.estado">ORDEN PENDIENTE</span>
                     <span>Click para obtener mas informacion de la orden</span>
-                    <nz-rate [ngModel]="4" nzDisabled *ngIf="item.estado"></nz-rate>
+                    <nz-rate [ngModel]="4.5" nzDisabled *ngIf="item.estado"></nz-rate>
                 </div>
                 <div class="card-label__progress">
-                        <img class="imagen-card"src="../../../../../../assets/undraw_shopping_app_flsj (1).svg" alt="">
+                    <img class="imagen-card" src="../../../../../../assets/undraw_shopping_app_flsj (1).svg" alt="">
                 </div>
             </div>
         </div>

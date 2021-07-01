@@ -3,6 +3,7 @@ import { FirestoreService } from '../../../../../services/firestore/firestore.se
 import { IProducto } from '../../../../../interface/iproducto';
 import { ModalProductoComponent } from '../../../carrousel-secciones/components/modal-producto/modal-producto.component';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-carrito-compra',
@@ -19,7 +20,7 @@ export class CarritoCompraComponent implements OnInit {
   estado;
   precioTotal:number = 0;
     
-    constructor(private firestoreService: FirestoreService,private modalNgz: NzModalService) { }
+    constructor(private firestoreService: FirestoreService,private modalNgz: NzModalService,private message: NzMessageService) { }
 
   ngOnInit(): void {  
     console.log(this.carritoProducto);
@@ -78,9 +79,10 @@ export class CarritoCompraComponent implements OnInit {
   const id = item[0].carritoId;
   this.firestoreService.updateCarrito(id)
     .then(r => {
+      this.message.create('success',`Orden Realizada Con Exito!!`);
       this.close()
   })
-  .catch(err => console.log(err));
+  .catch(err => this.message.create('warning',`Ups Ocurrido Un Error!!`));
   }
 
 

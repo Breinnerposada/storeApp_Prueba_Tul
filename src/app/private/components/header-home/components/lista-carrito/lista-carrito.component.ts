@@ -14,12 +14,10 @@ export class ListaCarritoComponent implements OnInit {
   constructor(private _fireStoreService: FirestoreService) { }
 
   ngOnInit(): void {
-    console.log(this.carrito.status);
   }
 
   close(){
   this.visibleCarrito = false
   this._fireStoreService.carritoVisible.emit(this.visibleCarrito)
   }
-
 }
