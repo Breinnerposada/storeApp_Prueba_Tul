@@ -7,7 +7,7 @@ const routes: Routes = [
 
  // {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'login',component: LoginComponent},
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: '', component: Page404Component},
   { path: '**', component: Page404Component },
 ];
 

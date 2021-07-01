@@ -1,0 +1,28 @@
+.imagen-card{
+    height: 150px;
+}
+
+.card{
+    background: rgb(58, 255, 0);
+    display: grid;
+    grid-template-columns: 70% 30%;
+    margin: 10px;
+    border-radius: 11px;
+    padding: 5px;
+}
+
+.card-label__id{
+    display: grid;
+    font-size: 15px;
+    padding: 5px;
+}
+
+.card-label__progress{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+        height: 60px;
+    }
+}

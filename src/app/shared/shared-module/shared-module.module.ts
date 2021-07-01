@@ -18,6 +18,7 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 
 
 
@@ -43,7 +44,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzSkeletonModule,
     NzAvatarModule,
     NzDropDownModule,
-    NzIconModule
+    NzIconModule,
+    NzStatisticModule
   ],
   exports: [
     CommonModule,
@@ -64,7 +66,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzSkeletonModule,
     NzAvatarModule,
     NzDropDownModule,
-    NzIconModule
+    NzIconModule,
+    NzStatisticModule
   ]
 })
 export class SharedModuleModule { }

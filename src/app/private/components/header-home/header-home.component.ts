@@ -29,6 +29,8 @@ export class HeaderHomeComponent implements OnInit {
   this.firestoreService.solovista.subscribe((resp) => {
     this.visible = resp;
   })
+
+  this.firestoreService.carritoVisible.subscribe((r) => this.visibleCarrito = r)
   
   this.firestoreService.getCarrito()
       .subscribe((res:any)=> {

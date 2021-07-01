@@ -3,15 +3,16 @@
 
     <div class="contenedor" *ngIf="carrito.length !== 0">
         <div class="content" *ngFor="let item of carrito">
-            <nz-card>
+            <div class="card" [ngStyle]=" {background: item.estado ? '#3aff008c' : 'rgb(232 23 23 / 85%)'  } ">
                 <div class="card-label__id">
                     <p>{{item.id}}</p>
+                    <span>Click para obtener mas informacion de la orden</span>
+                    <nz-rate [ngModel]="4" nzDisabled *ngIf="item.estado"></nz-rate>
                 </div>
                 <div class="card-label__progress">
-                    <div [ngStyle]=" {background: !item.status ? '#3AFF00' : '#E81717'  } ">Hola</div>
-
+                        <img class="imagen-card"src="../../../../../../assets/undraw_shopping_app_flsj (1).svg" alt="">
                 </div>
-            </nz-card>
+            </div>
         </div>
     </div>
 

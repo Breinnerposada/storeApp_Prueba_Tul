@@ -11,6 +11,7 @@ import { createHostListener } from '@angular/compiler/src/core';
 })
 export class FirestoreService {
   @Output() solovista: EventEmitter<any> = new EventEmitter<any>() ;
+  @Output() carritoVisible: EventEmitter<any> = new EventEmitter<any>() ;
   @Output() productoSeleccionado: EventEmitter<any> = new EventEmitter<any>();
   @Output() productoEditado: EventEmitter<any> = new EventEmitter<any>();
   productos: Observable<any[]>;
